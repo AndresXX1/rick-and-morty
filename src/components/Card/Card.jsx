@@ -6,17 +6,6 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 export default function Card(props) {
 
-   const [isFavorite, setIsFavorite] = useState(false);
-
-   const handleFavoriteClick = () => {
-     setIsFavorite(!isFavorite);
-       // Aquí puedes agregar lógica adicional para guardar la tarjeta en la lista de favoritos
-       if (!isFavorite) {
-        props.onAddToFavorites(props.id); // Pasar el ID de la tarjeta a la función onAddToFavorites en props
-      } else {
-        props.onRemoveFromFavorites(props.id); // Pasar el ID de la tarjeta a la función onRemoveFromFavorites en props
-      }
-    };
     
 
    return (
