@@ -1,49 +1,67 @@
-import React,{useState} from "react";
+import React from "react";
 import styles from "./Card.module.css";
 import { Link } from "react-router-dom";
-import '@fortawesome/fontawesome-free/css/all.css';
+import { addFav, removeFav } from "../Redux/actions";
+import { connect } from "react-redux";
+import { useState, useEffect } from "react";
+
+const Card = ({id, name, status, species, gender, origin, image, onClose, addFav, removeFav, myFavorites}) => {
+  const [isFav, setFavs] = useState(false);
+
+  const handleFavorite = () => {
+    isFav ? removeFav(id) : addFav({id, name, status, species, gender, origin, image, onClose});
+    setFavs(!isFav);
+  };
+
+  useEffect(() => {
+   myFavorites.forEach((fav) => {
+     if (fav.id === id) {
+       setFavs(true);
+     }
+   });
+ }, [myFavorites, id]);
 
 
-export default function Card(props) {
-
-    
-
-   return (
-      <div className={styles.container}>
-         <div className={styles.buttonContainer}>
-
-<button onClick={props.onClose}>X</button>
-        <div>
-        <button onClick={handleFavoriteClick}
-        >{isFavorite ? '❤️' : '🤍'}
-        </button> 
+  return (
+    <div className={styles.container}>
+      <div className={styles.buttonContainer}>
+        <button onClick={onClose}>X</button>
+        {
+        isFav ? (
+          <button onClick={handleFavorite}>❤️</button>
+        ) : (
+          <button onClick={handleFavorite}>🤍</button>
+      )
+       }
+      </div>
+      <Link to={`/detail/${id}`}>
+        <div className={styles.dataContainer}>
+          <h2>Name: "{name}"</h2>
+          <h4>Status: "{status}"</h4>
+          <h4>Species: "{species}"</h4>
+          <h4>Gender: "{gender}"</h4>
+          <h2>Origin: "{origin}"</h2>
+          <h2>image: "{image}"</h2>
+          <img className={styles.image} src={image} alt={name} />
         </div>
-         </div>
-         <Link to={`/detail/${props.id}`}>
-        <div className={styles.dataContainer}>         
-         <h2>{props.name}</h2>
-         <h4>{props.status}</h4>
-         <h4>{props.species}</h4>
-         <h4>{props.gender}</h4>
-         <h2>{props.origin}</h2>
-         <img className={styles.image} src={props.image} alt={props.name} />
-         </div>
-         </Link>
+      </Link>
+    </div>
+  );
 
-        </div>
-
-      
-      
-         
-         
-   );
 }
-// alt en img es una propiedad alterna que se ejecuta si no llega la imagen
-//todo esto esta dentro de props = {}
-// name: nombre.
-// status: status.
-// species: especie.
-// gender: género.
-// origin: origen (ten en cuenta que el nombre del origen viene dentro de otra propiedad llamada name).
-// image: imagen.
-// Además, cuando el usuario haga click en la X de "cerrar", debe ejecutarse una función que también viene como props llamada onClose
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addFav: (character) => dispatch(addFav(character)),
+    removeFav: (id) => dispatch(removeFav(id)),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    myFavorites: state.myFavorites,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

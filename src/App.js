@@ -7,26 +7,27 @@ import axios from "axios";
 import About from './components/Abaut/Abaut.jsx';
 import Detail from './components/Detail/Detail';
 import Form from './components/Form/Form';
-import Favorite from './components/Favorite/Favorite';
+import Favorites from './components/Favorites/Favorites';
 
 function App() {
   const [characters, setCharacters] = useState([]);
   const [access, setAccess] = useState(false);
 
-  const navigate = useNavigate();
   const username = 'andres_9_09@hotmail.com';
   const password = '512364';
-  
+  const navigate = useNavigate();
+
   function login(userData) {
-     if (userData.password === password && userData.username === username) {
-        setAccess(true);
-        navigate('/home');
-     }
+    if (userData.password === password && userData.username === username) {
+      setAccess(true);
+      navigate('/home');
+    
+  }
   }
 
   useEffect(() => {
     !access && navigate('/');
- }, [access]);
+  }, [access, navigate]);
 
   function onSearch(id) {
     axios(`https://rickandmortyapi.com/api/character/${id}`).then(({ data }) => {
@@ -40,7 +41,10 @@ function App() {
 
 
   const onClose = id => {
-    setCharacters(characters.filter(char => char.id !== id));
+    if (Array.isArray(characters)) {
+      setCharacters(characters.filter(char => char.id !== id));
+    }
+  
   }
   const location = useLocation()
 
@@ -53,7 +57,7 @@ function App() {
         <Route path='/about' element={<About />} />
         <Route path='/home' element={<Cards characters={characters} onClose={onClose} />} />
         <Route path='/detail/:detailId' element={<Detail />} />
-        <Route path='/favorite' element={<Favorite />} />
+        <Route path='/favorites' element={<Favorites />} />
       </Routes>
     </div>
   );

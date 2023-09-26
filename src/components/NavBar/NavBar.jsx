@@ -15,7 +15,7 @@ export default function NavBar(props) {
   };
 
   const handleClickFavorites = () => {
-    setShowBackgroundImage(true);
+    setShowBackgroundImage(false);
   }
 
   const backgroundImageStyle = {
@@ -27,26 +27,26 @@ export default function NavBar(props) {
   };
 
   return (
-   <div className={styles.dataContainer}>
-     <NavLink to="/about">
-       <button onClick={handleClickAbout}>About</button>
-     </NavLink>
-     <NavLink to="/home">
-       <button onClick={handleClickHome}>Home</button>
-       <NavLink to="/favorites">
-        <button onClick={handleClickFavorites}> Favorites </button>
-       </NavLink>
-     </NavLink>
-     <sr />
-     <SearchBar onSearch={props.onSearch} />
-     {showBackgroundImage && (
-       <div style={backgroundImageStyle}>
-         <div className={styles.textContainer}>
-           <h1>Tu texto aquí</h1>
-           <p>Puedes añadir más contenido de texto</p>
-         </div>
-       </div>
-     )}
-   </div>
+    <div className={styles.dataContainer}>
+    <NavLink to="/about">
+      <button onClick={handleClickAbout}>About</button>
+    </NavLink>
+    <NavLink to="/home">
+      <button onClick={handleClickHome}>Home</button>
+    </NavLink>
+    <NavLink to="/favorites">
+      <button onClick={handleClickFavorites}>Favorites</button>
+    </NavLink>
+    <sr />
+    <SearchBar onSearch={props.onSearch} />
+    {showBackgroundImage && (
+      <div style={backgroundImageStyle}>
+        <div className={styles.textContainer}>
+          <h1>Tu texto aquí</h1>
+          <p>Puedes añadir más contenido de texto</p>
+        </div>
+      </div>
+    )}
+  </div>
  );
 }

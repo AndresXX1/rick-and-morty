@@ -8,19 +8,18 @@ export default function Cards(props) {
    //props = {characters: [{...}, {...}, {...}]}
    return(
     <div style={{display:"flex", justifyContent: "space-between"}}>
-      {characters.map(character => (
-         <Card // por cada uno de ellos renderizar un componente card, para cada uno de los elementos del array
-         // como characters es un array usamos.map y usamos una iife para pasarle todas las propiedades de cada elemento del array
-         id={character.id}
-         key= {character.id} // le agrege una propiedad llamada key que es igual al id de cada elemento del array
-         name={character.name}
-         status={character.status}
-         species={character.species}
-         gender={character.gender}
-         origin={character.origin.name}
-         image= {character.image}
-         onClose={() => props.onClose(character.id)}
-         isFavorite={character.isFavorite}
+      {characters && characters.length > 0 && characters.map((character) => (
+  <Card
+    key={character.id}
+    id={character.id}
+    name={character.name}
+    status={character.status}
+    species={character.species}
+    gender={character.gender}
+    origin={character.origin.name}
+    image={character.image}
+    onClose={() => props.onClose(character.id)}
+         
          />
 
       ))}
