@@ -1,8 +1,45 @@
-
-
 .dataContainer {
-    background-image: url('https://media2.giphy.com/media/zPlGxzu027rEELiCFr/200.gif');
-    background-size: cover; /* Asegura que la imagen cubra todo el contenedor */
-    background-position: center; /* Centra la imagen */
-    /* Agrega cualquier otro estilo deseado para el contenedor */
-  }
+  background-image: url('https://media2.giphy.com/media/zPlGxzu027rEELiCFr/200.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.buttonsAndSearch {
+  display: flex;
+  align-items: center;
+}
+
+.buttonsAndSearch button {
+  margin-right: 10px;
+}
+
+.buttonsAndSearch input[type="text"] {
+  margin-right: 10px;
+}
+
+.icon {
+  width: 40px; /* Ajusta el tamaño según tus necesidades */
+  height: 40px;
+  margin-right: 10px; /* Espacio entre los iconos */
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header h1,
+.header h2 {
+  color: white; /* Cambia el color del texto a blanco */
+}

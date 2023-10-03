@@ -1,47 +1,114 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Card.module.css";
 import { Link } from "react-router-dom";
-import { addFav, deleteFav } from "../Redux/actions"; // Cambia "removeFav" a "deleteFav"
+import { addFav, deleteFav } from "../Redux/actions";
 import { connect } from "react-redux";
-import { useState, useEffect } from "react";
 
-const Card = ({ id, name, status, species, gender, origin, image, onClose, addFav, deleteFav, myFavorites }) => { // Cambia "removeFav" a "deleteFav"
-  const [isFav, setFavs] = useState(false);
+const Card = ({
+  id,
+  name,
+  status,
+  species,
+  gender,
+  origin,
+  image,
+  onClose,
+  addFav,
+  deleteFav,
+  myFavorites,
+}) => {
+  const [isFav, setIsFav] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
 
-  const handleFavorite = () => {
-    isFav ? deleteFav(id) : addFav({ id, name, status, species, gender, origin, image, onClose });
-    setFavs(!isFav);
-  };
-
+  // Verifica si el personaje está en la lista de favoritos al cargar el componente
   useEffect(() => {
-    myFavorites.forEach((fav) => {
-      if (fav.id === id) {
-        setFavs(true);
-      }
-    });
+    setIsFav(myFavorites.some((character) => character.id === id));
   }, [myFavorites, id]);
 
+  const handleFavorite = () => {
+    if (isFav) {
+      deleteFav(id);
+    } else {
+      addFav({ id, name, status, species, gender, origin, image });
+    }
+    setIsFav(!isFav);
+  };
+
+  const handleCardFlip = () => {
+    setIsFlipped(!isFlipped);
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles.buttonContainer}>
-        <button onClick={onClose}>X</button>
-        {isFav ? (
-          <button onClick={handleFavorite}>❤️</button>
-        ) : (
-          <button onClick={handleFavorite}>🤍</button>
-        )}
-      </div>
-      <Link to={`/detail/${id}`}>
-        <div className={styles.dataContainer}>
-          <h2>Name: "{name}"</h2>
-          <h4>Status: "{status}"</h4>
-          <h4>Species: "{species}"</h4>
-          <h4>Gender: "{gender}"</h4>
-          <h2>Origin: "{origin}"</h2>
-          <h2>image: "{image}"</h2>
+    <div
+      className={`${styles.card} ${isFlipped ? styles.flipped : ""}`}
+      onClick={handleCardFlip}
+    >
+      <div className={styles.inner}>
+        <div className={`${styles.front} ${isFlipped ? styles.hidden : ""}`}>
+          {/* Contenido frontal de la tarjeta */}
           <img className={styles.image} src={image} alt={name} />
         </div>
-      </Link>
+        <div className={`${styles.back} ${isFlipped ? "" : styles.hidden}`}>
+          {/* Contenido trasero de la tarjeta */}
+          <Link to={`/detail/${id}`}>
+            <div className={styles.dataContainer}>
+              <h2
+                style={{
+                  fontFamily: "'Pixelify Sans', cursive",
+                  color: "#aaaaaa", // Gris claro para el título
+                  borderBottom: "2px solid #333333", // Borde gris oscuro
+                }}
+              >
+                Name: "{name}"
+              </h2>
+              <h4
+                style={{
+                  fontFamily: "'Pixelify Sans', cursive",
+                  color: "#333333", // Gris oscuro para el texto
+                  borderBottom: "2px solid #333333", // Borde gris oscuro
+                }}
+              >
+                Status: "{status}"
+              </h4>
+              <h4
+                style={{
+                  fontFamily: "'Pixelify Sans', cursive",
+                  color: "#333333", // Gris oscuro para el texto
+                  borderBottom: "2px solid #333333", // Borde gris oscuro
+                }}
+              >
+                Species: "{species}"
+              </h4>
+              <h4
+                style={{
+                  fontFamily: "'Pixelify Sans', cursive",
+                  color: "#333333", // Gris oscuro para el texto
+                  borderBottom: "2px solid #333333", // Borde gris oscuro
+                }}
+              >
+                Gender: "{gender}"
+              </h4>
+              <h4
+                style={{
+                  fontFamily: "'Pixelify Sans', cursive",
+                  color: "#333333", // Gris oscuro para el texto
+                  borderBottom: "2px solid #333333", // Borde gris oscuro
+                }}
+              >
+                Origin: "{origin}"
+              </h4>
+            </div>
+          </Link>
+          <div className={styles.buttonContainer}>
+            <button className={styles.favorite} onClick={handleFavorite}>
+              {isFav ? "❤️" : "🤍"}
+            </button>
+            <button className={styles.close} onClick={onClose}>
+              X
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -49,7 +116,7 @@ const Card = ({ id, name, status, species, gender, origin, image, onClose, addFa
 const mapDispatchToProps = (dispatch) => {
   return {
     addFav: (character) => dispatch(addFav(character)),
-    deleteFav: (id) => dispatch(deleteFav(id)), // Cambia "removeFav" a "deleteFav"
+    deleteFav: (id) => dispatch(deleteFav(id)),
   };
 };
 

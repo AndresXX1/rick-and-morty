@@ -1,0 +1,19 @@
+.favorites-container {
+    display: flex; /* Establece un contenedor flexible */
+    flex-wrap: nowrap; /* Evita que las tarjetas se envuelvan a la siguiente línea */
+    overflow-x: auto; /* Agrega una barra de desplazamiento horizontal si las tarjetas no caben en el contenedor */
+  }
+  
+  /* Establece un margen entre las tarjetas para que no estén pegadas entre sí */
+  .favorites-container > div {
+    margin-right: 10px;
+  }
+
+  .favorite-button-active {
+    color: red; /* Cambia el color a rojo cuando está activado */
+  }
+  
+  /* Corazón desactivado (no en favoritos) */
+  .favorite-button-inactive {
+    color: white; /* Cambia el color a blanco cuando está desactivado */
+  }

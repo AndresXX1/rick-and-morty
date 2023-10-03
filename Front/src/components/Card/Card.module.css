@@ -1,53 +1,103 @@
-.container {
-    border: 1px solid gray ;
-    background-image: url(https://cdnb.artstation.com/p/assets/images/images/021/894/025/original/nadir-khabibullin-f1.gif?1573340645);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 10px;
-    width: 170px;
-    padding: 10px;
-    box-shadow: 0 0 10px black;
-}
-
-.image {
-    width: 120px;
-    
-}
-
-
-.buttonContainer{
-    
+/* Estilos para la tarjeta */
+.card {
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .inner {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+  
+  .card:hover .inner {
+    transform: rotateY(180deg);
+  }
+  
+  .front,
+  .back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+  }
+  
+  .front {
+    transform: rotateY(0deg);
     display: flex;
-    justify-content: flex-end;
-}
-
-.buttonContainer button {
+    justify-content: center;
+    align-items: center;
+    background-image: url('https://cdnb.artstation.com/p/assets/images/images/021/894/025/original/nadir-khabibullin-f1.gif?1573340645');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  
+  .back {
+    transform: rotateY(180deg);
+    background-image: url('https://cdnb.artstation.com/p/assets/images/images/021/894/025/original/nadir-khabibullin-f1.gif?1573340645');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  
+  .back .buttonContainer {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  
+  .back .buttonContainer button {
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .back .buttonContainer button.favorite,
+  .back .buttonContainer button.close {
+    font-size: 30px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+  }
+  
+  .back .buttonContainer button.close {
+    font-size: 30px;
     background-color: salmon;
     color: white;
-    border: 0px;
-    border-radius: 2px;
-}
-
-.dataContainer{
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  /* Estilos para el texto de características */
+  .characteristics-container {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
     text-align: center;
     padding: 10px;
-}
-
-.dataContainer h2{
-    margin: 2px;
-    font-size: 16px;
-    color: rgb(72, 193, 193);
-}
-
-.dataContainer h4{
-    margin: 2px;
-    font-size: 14px;
-    color: rgb(38, 123, 123);
-}
-
-.favorite {
-    display: flex;
-    justify-content: flex-start;
-
-}
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    font-family: 'Pixelify Sans', cursive; /* Fuente "Pixelify Sans" */
+  }
+  
+  .characteristics-container p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.5;
+  }
